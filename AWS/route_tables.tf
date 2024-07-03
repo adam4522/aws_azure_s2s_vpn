@@ -13,6 +13,16 @@ resource "aws_route_table" "vpc_a_publicrt" {
     transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
 
+
+
+  route { #this route has been added to route to AZURE via the transit gw
+    cidr_block = "10.128.0.0/16"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
+
+
+
   tags = {
     Name = "vpc_a_publicrt"
   }
@@ -46,6 +56,11 @@ resource "aws_route_table" "vpc_a_privatert" {
 
   route { #this route has been added to route to vpc B via the transit gw
     cidr_block = "172.16.0.0/26"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
+  route { #this route has been added to route to AZURE via the transit gw
+    cidr_block = "10.128.0.0/16"
     transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
 
@@ -88,6 +103,11 @@ resource "aws_route_table" "vpc_b_publicrt" {
     transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
 
+    route { #this route has been added to route to AZURE via the transit gw
+    cidr_block = "10.128.0.0/16"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
 
   tags = {
     Name = "vpc_b_publicrt"
@@ -112,6 +132,12 @@ resource "aws_route_table" "vpc_b_privatert" {
 
   route { #this route has been added to route to vpc A via the transit gw
     cidr_block = "10.196.0.0/16"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
+
+    route { #this route has been added to route to AZURE via the transit gw
+    cidr_block = "10.128.0.0/16"
     transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   }
 
