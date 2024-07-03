@@ -7,6 +7,12 @@ resource "aws_route_table" "vpc_a_publicrt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.vpc_a_igw.id
   }
+
+  route { #this route has been added to route to vpc B via the transit gw
+    cidr_block = "172.16.0.0/26"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
   tags = {
     Name = "vpc_a_publicrt"
   }
@@ -37,6 +43,12 @@ resource "aws_route_table" "vpc_a_privatert" {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_gw_vpc_a.id
   }
+
+  route { #this route has been added to route to vpc B via the transit gw
+    cidr_block = "172.16.0.0/26"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
   tags = {
     Name = "vpc_a_privatert"
   }
@@ -70,6 +82,13 @@ resource "aws_route_table" "vpc_b_publicrt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.vpc_b_igw.id
   }
+
+  route { #this route has been added to route to vpc A via the transit gw
+    cidr_block = "10.196.0.0/16"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
+
   tags = {
     Name = "vpc_b_publicrt"
   }
@@ -90,6 +109,12 @@ resource "aws_route_table" "vpc_b_privatert" {
     cidr_block = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat_gw_vpc_b.id
   }
+
+  route { #this route has been added to route to vpc A via the transit gw
+    cidr_block = "10.196.0.0/16"
+    transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+
   tags = {
     Name = "vpc_b_privatert"
   }
